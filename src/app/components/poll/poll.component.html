@@ -80,46 +80,48 @@
             <h2 class="text-white text-center">Current Votes</h2>
           </div>
           <div *ngIf="loaded && votes?.size > 0" class="list-group-item border-0 mb-2">
-            <table class="table table-bordered text-justify" id="votesTable">
-              <thead>
-                <tr>
-                  <th class="text-success" data-toggle="tooltip" title="Yes">
-                    <i class="fas fa-thumbs-up fa-2x"></i>
-                    <span class="badge badge-success badge-pill float-right">{{votes.get('Yes')?.length}}</span>
-                  </th>
-                  <th class="text-danger" data-toggle="tooltip" title="No">
-                    <i class="fas fa-thumbs-down fa-2x"></i>
-                    <span class="badge badge-danger badge-pill float-right">{{votes.get('No')?.length}}</span>
-                  </th>
-                  <th class="text-warning" data-toggle="tooltip" title="Not Sure">
-                    <i class="fas fa-meh fa-2x"></i>
-                    <span class="badge badge-warning badge-pill float-right">{{votes.get('Tentative')?.length}}</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <h6 *ngFor="let userTag of votes.get('Yes')">
-                      <span>{{userTag.name}}</span>
-                      <span *ngIf="userTag.team !== 'Unknown'" class="badge badge-primary float-right">{{userTag.team}}</span>
-                    </h6>
-                  </td>
-                  <td>
-                    <h6 *ngFor="let userTag of votes.get('No')">
-                      <span>{{userTag.name}}</span>
-                      <span *ngIf="userTag.team !== 'Unknown'" class="badge badge-primary float-right">{{userTag.team}}</span>
-                    </h6>
-                  </td>
-                  <td>
-                    <h6 *ngFor="let userTag of votes.get('Tentative')">
-                      <span>{{userTag.name}}</span>
-                      <span *ngIf="userTag.team !== 'Unknown'" class="badge badge-primary float-right">{{userTag.team}}</span>
-                    </h6>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive-sm">
+              <table class="table table-bordered text-justify" id="votesTable">
+                <thead>
+                  <tr>
+                    <th class="text-success" data-toggle="tooltip" title="Yes">
+                      <i class="fas fa-thumbs-up fa-2x"></i>
+                      <span class="badge badge-success badge-pill float-right">{{votes.get('Yes')?.length}}</span>
+                    </th>
+                    <th class="text-danger" data-toggle="tooltip" title="No">
+                      <i class="fas fa-thumbs-down fa-2x"></i>
+                      <span class="badge badge-danger badge-pill float-right">{{votes.get('No')?.length}}</span>
+                    </th>
+                    <th class="text-warning" data-toggle="tooltip" title="Not Sure">
+                      <i class="fas fa-meh fa-2x"></i>
+                      <span class="badge badge-warning badge-pill float-right">{{votes.get('Tentative')?.length}}</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <h6 *ngFor="let userTag of votes.get('Yes')">
+                        <span>{{userTag.name}}</span>
+                        <span *ngIf="userTag.team !== 'Unknown'" class="badge badge-primary float-right">{{userTag.team}}</span>
+                      </h6>
+                    </td>
+                    <td>
+                      <h6 *ngFor="let userTag of votes.get('No')">
+                        <span>{{userTag.name}}</span>
+                        <span *ngIf="userTag.team !== 'Unknown'" class="badge badge-primary float-right">{{userTag.team}}</span>
+                      </h6>
+                    </td>
+                    <td>
+                      <h6 *ngFor="let userTag of votes.get('Tentative')">
+                        <span>{{userTag.name}}</span>
+                        <span *ngIf="userTag.team !== 'Unknown'" class="badge badge-primary float-right">{{userTag.team}}</span>
+                      </h6>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <div class="row">
               <div class="col">
                 <button (click)="downloadAsImage()" class="btn btn-dark btn-block bg-black-custom">Download Votes Data</button>
