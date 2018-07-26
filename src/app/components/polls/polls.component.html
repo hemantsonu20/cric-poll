@@ -1,0 +1,51 @@
+<div class="row mb-5">
+  <div *ngIf="loaded && fetchError" class="text-danger">
+    <h3>Unexpected Error Occurred</h3>
+    <p class="lead text-muted">Unable to fetch poll details from the system, please try after sometime or contact support team.</p>
+  </div>
+  <div *ngIf="!loaded" class="text-muted">
+    <h3>Please wait...</h3>
+  </div>
+  <div *ngIf="loaded && !fetchError" class="col-md-6 mx-auto">
+    <div class="card bg-info text-black-custom">
+      <div class="card-header">
+        <h3 class="text-center">Your Polls</h3>
+      </div>
+      <div class="card-body">
+        <table *ngIf="polls?.length > 0" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>
+                <i class="fas fa-align-justify fa-2x"></i>
+              </th>
+              <th>
+                <i class="fas fa-align-left fa-2x"></i>
+              </th>
+              <th>
+                <i class="fas fa-clock fa-2x"></i>
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let poll of polls">
+              <td>
+                <a routerLink="{{poll.id}}" class="text-black-custom">
+                  <u>{{poll.title}}</u>
+                </a>
+              </td>
+              <td>{{poll.note}}</td>
+              <td>{{poll.scheduledDate | amDateFormat:'LLLL'}}</td>
+              <td class="text-danger">
+                <i (click)="onDelete(poll)" class="fas fa-trash-alt deleteIcon"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="!polls || polls.length == 0">
+          <h3>You haven't created any polls yet. Create One</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

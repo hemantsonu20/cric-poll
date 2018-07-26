@@ -1,0 +1,8 @@
+.shareIcon {
+  cursor: pointer;
+}
+
+.shareIcon:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}

@@ -1,0 +1,52 @@
+<div class="row mb-5">
+  <div class="col-md-6 mx-auto">
+    <div class="card bg-info text-black-custom">
+      <div class="card-header">
+        <h4 class="text-center">Invite friends for a cricket match and have fun</h4>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title text-center text-white">
+          <i class="fas fa-cricket"></i> Create a Cric Poll
+        </h1>
+        <form #createPollForm="ngForm" (submit)="onSubmit()">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text text-black-custom">
+                  <i class="fas fa-align-justify"></i>
+                </span>
+              </div>
+              <input type="text" name="title" class="form-control text-black-custom" placeholder="Title" #titleInput="ngModel" [ngClass]="{'is-invalid': titleInput.errors && titleInput.touched }"
+                [(ngModel)]="poll.title" required>
+              <div class="invalid-feedback" [hidden]="!titleInput.errors?.required">Title Required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text text-black-custom">
+                  <i class="fas fa-align-left"></i>
+                </span>
+              </div>
+              <textarea type="text" name="note" class="form-control text-black-custom" placeholder="Optional Note" #noteInput="ngModel"
+                [ngClass]="{'is-invalid': noteInput.errors && noteInput.touched }" [(ngModel)]="poll.note"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text text-black-custom">
+                  <i class="fas fa-clock"></i>
+                </span>
+              </div>
+              <input type="datetime-local" name="scheduledDate" class="form-control text-black-custom" #scheduledDateInput="ngModel" [ngClass]="{'is-invalid': scheduledDateInput.errors && scheduledDateInput.touched }"
+                [(ngModel)]="scheduledDate" required>
+              <div class="invalid-feedback" [hidden]="!scheduledDateInput.errors?.required">Scheduled Date Required</div>
+            </div>
+          </div>
+          <input type="submit" [disabled]="createPollForm.form.invalid" class="btn btn-dark bg-black-custom btn-block" value="Submit">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

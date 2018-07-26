@@ -1,0 +1,164 @@
+<div class="row mb-5">
+  <div *ngIf="loaded && fetchError" class="text-danger">
+    <h3>Unexpected Error Occurred</h3>
+    <p class="lead text-muted">Unable to fetch poll details from the system, please try after sometime or contact support team.</p>
+  </div>
+  <div *ngIf="!loaded" class="text-muted">
+    <h3>Please wait...</h3>
+  </div>
+  <div class="col-md-6 mx-auto">
+    <div *ngIf="loaded && !fetchError" class="card bg-info text-white">
+      <div class="card-header text-center text-black-custom">
+        <h4>
+          <i class="fas fa-align-justify"></i>
+          <span class="pl-3"></span>{{poll.title}}
+          <small (click)="onShareClick()" ngxClipboard [cbContent]="currentPollUrl" class="float-right text-black-custom shareIcon"
+            href="#">
+            <i class="fas fa-share-alt fa-2x"></i>
+          </small>
+        </h4>
+        <h6>Created By {{poll.ownerName}} ({{poll.ownerEmail}})</h6>
+        <small>{{poll.createdDate | amTimeAgo}}</small>
+      </div>
+      <div class="card-body">
+        <div class="list-group list-group-flush text-black-custom">
+          <div class="list-group-item border-0 mb-2">
+            <i class="fas fa-align-left"></i>
+            <span class="pl-3">{{poll.note}}</span>
+          </div>
+          <div class="list-group-item border-0 mb-2">
+            <i class="fas fa-clock"></i>
+            <span class="pl-3">{{poll.scheduledDate | amDateFormat:'LLLL'}}</span>
+          </div>
+          <div class="list-group-item border-0 bg-info text-white text-center">
+            <h2>Please Vote</h2>
+            <h6 class="lead">Are you available for the above event</h6>
+          </div>
+          <div class="list-group-item border-0 mb-2">
+            <form #voteForm="ngForm" (submit)="onVoteSubmit()">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text text-black-custom">
+                      <i class="fas fa-user"></i>
+                    </span>
+                  </div>
+                  <input type="text" name="name" class="form-control text-black-custom" #nameInput="ngModel" [ngClass]="{ 'is-invalid' : nameInput.errors && nameInput.touched }"
+                    [(ngModel)]="vote.name" placeholder="Your Name" required>
+                </div>
+              </div>
+              <div class="form-group form-row">
+                <div class="col-sm mb-2 mb-sm-0">
+                  <div class="form-check form-check-inline" data-toggle="tooltip" title="Yes">
+                    <input type="radio" [(ngModel)]="vote.vote" class="form-check-input mr-4" name="vote" value="Yes" required>
+                    <label class="form-check-label text-success">
+                      <i class="fas fa-thumbs-up fa-2x"></i>
+                    </label>
+                  </div>
+                </div>
+                <div class="col-sm mb-2 mb-sm-0">
+                  <div class="form-check form-check-inline" data-toggle="tooltip" title="No">
+                    <input type="radio" [(ngModel)]="vote.vote" class="form-check-input mr-4" name="vote" value="No" required>
+                    <label class="form-check-label text-danger">
+                      <i class="fas fa-thumbs-down fa-2x"></i>
+                    </label>
+                  </div>
+                </div>
+                <div class="col-sm mb-2 mb-sm-0">
+                  <div class="form-check form-check-inline" data-toggle="tooltip" title="Not Sure">
+                    <input type="radio" [(ngModel)]="vote.vote" class="form-check-input mr-4" name="vote" value="Tentative" required>
+                    <label class="form-check-label text-warning">
+                      <i class="fas fa-meh fa-2x"></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <input type="submit" [disabled]="voteForm.form.invalid" class="btn btn-dark bg-black-custom btn-block" value="Vote {{vote.vote}}">
+            </form>
+          </div>
+          <div *ngIf="loaded && votes?.size > 0" class="list-group-item border-0 bg-info">
+            <h2 class="text-white text-center">Current Votes</h2>
+          </div>
+          <div *ngIf="loaded && votes?.size > 0" class="list-group-item border-0 mb-2">
+            <table class="table table-bordered text-justify" id="votesTable">
+              <thead>
+                <tr>
+                  <th class="text-success" data-toggle="tooltip" title="Yes">
+                    <i class="fas fa-thumbs-up fa-2x"></i>
+                    <span class="badge badge-success badge-pill float-right">{{votes.get('Yes')?.length}}</span>
+                  </th>
+                  <th class="text-danger" data-toggle="tooltip" title="No">
+                    <i class="fas fa-thumbs-down fa-2x"></i>
+                    <span class="badge badge-danger badge-pill float-right">{{votes.get('No')?.length}}</span>
+                  </th>
+                  <th class="text-warning" data-toggle="tooltip" title="Not Sure">
+                    <i class="fas fa-meh fa-2x"></i>
+                    <span class="badge badge-warning badge-pill float-right">{{votes.get('Tentative')?.length}}</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <h6 *ngFor="let userTag of votes.get('Yes')">
+                      <span>{{userTag.name}}</span>
+                      <span *ngIf="userTag.team !== 'Unknown'" class="badge badge-primary float-right">{{userTag.team}}</span>
+                    </h6>
+                  </td>
+                  <td>
+                    <h6 *ngFor="let userTag of votes.get('No')">
+                      <span>{{userTag.name}}</span>
+                      <span *ngIf="userTag.team !== 'Unknown'" class="badge badge-primary float-right">{{userTag.team}}</span>
+                    </h6>
+                  </td>
+                  <td>
+                    <h6 *ngFor="let userTag of votes.get('Tentative')">
+                      <span>{{userTag.name}}</span>
+                      <span *ngIf="userTag.team !== 'Unknown'" class="badge badge-primary float-right">{{userTag.team}}</span>
+                    </h6>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row">
+              <div class="col">
+                <button (click)="downloadAsImage()" class="btn btn-dark btn-block bg-black-custom">Download Votes Data</button>
+              </div>
+            </div>
+          </div>
+          <!-- Disabling auction part -->
+          <div *ngIf="false && isCurrentPollOwner && loaded && votes?.size > 0" class="list-group-item border-0 bg-info">
+            <h2 class="text-white text-center">Auctions</h2>
+          </div>
+          <div *ngIf="false && isCurrentPollOwner && loaded && votes?.size > 0" class="list-group-item border-0">
+            <form #auctionNominationForm="ngForm" (submit)="onAuctionNominationSubmit()">
+              <div class="form-group form-row">
+                <div class="col-sm mb-2 mb-sm-0">
+                  <input type="text" name="teamA" class="form-control text-black-custom" #teamAInput="ngModel" [ngClass]="{ 'is-invalid' : teamAInput.errors && teamAInput.touched }"
+                    [(ngModel)]="auction.firstTeam" placeholder="Team A Name" required>
+                  <small class="form-text text-muted">First team will start auction first</small>
+                </div>
+                <div class="col-sm mb-2 mb-sm-0">
+                  <input type="email" name="teamAOwner" class="form-control text-black-custom" #teamAOwnerInput="ngModel" [ngClass]="{ 'is-invalid' : teamAOwnerInput.errors && teamAOwnerInput.touched }"
+                    [(ngModel)]="auction.firstTeamOwner" placeholder="Team A Manager Email" required>
+                  <small class="form-text text-muted">User to choose player for his team</small>
+                </div>
+              </div>
+              <div class="form-group form-row">
+                <div class="col-sm mb-2 mb-sm-0">
+                  <input type="text" name="teamB" class="form-control text-black-custom" #teamBInput="ngModel" [ngClass]="{ 'is-invalid' : teamBInput.errors && teamBInput.touched }"
+                    [(ngModel)]="auction.secondTeam" placeholder="Team B Name" required>
+                </div>
+                <div class="col-sm mb-2 mb-sm-0">
+                  <input type="email" name="teamBOwner" class="form-control text-black-custom" #teamBOwnerInput="ngModel" [ngClass]="{ 'is-invalid' : teamBOwnerInput.errors && teamBOwnerInput.touched}"
+                    [(ngModel)]="auction.secondTeamOwner" placeholder="Team B Manager Email" required>
+                </div>
+              </div>
+              <input type="submit" [disabled]="auctionNominationForm.form.invalid" class="btn btn-dark bg-black-custom btn-block" value="{{ poll.auction ? 'Update Auction Nomination'  : 'Nominate For Auction'}}">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
