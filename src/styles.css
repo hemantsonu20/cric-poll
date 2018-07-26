@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+.bg-black-custom {
+  background-color: black;
+}
+
+.text-black-custom {
+  color: black;
+}
+
+input.bg-black-custom[type="submit"]:disabled {
+  opacity: 0.9;
+}

@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyDvaueNowa4ItJV8EXbEOiIjgR_qJo9xNU',
+    authDomain: 'cric-poll.firebaseapp.com',
+    databaseURL: 'https://cric-poll.firebaseio.com',
+    projectId: 'cric-poll',
+    storageBucket: 'cric-poll.appspot.com',
+    messagingSenderId: '579201465027',
+  },
+  cricPollBaseUrl: 'http://localhost:8080',
 };
 
 /*
