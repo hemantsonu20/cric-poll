@@ -13,6 +13,8 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { MomentModule } from 'ngx-moment';
 import { ClipboardModule } from 'ngx-clipboard';
+import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressHttpModule } from '@ngx-progressbar/http';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -54,6 +56,8 @@ import { AuctionComponent } from './components/auction/auction.component';
     AngularFireAuthModule,
     MomentModule,
     ClipboardModule,
+    NgProgressModule.forRoot(),
+    NgProgressHttpModule,
   ],
   providers: [AuthService, PollService],
   bootstrap: [AppComponent],

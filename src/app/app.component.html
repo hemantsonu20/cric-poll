@@ -1,6 +1,10 @@
 <app-navbar></app-navbar>
+<ng-progress [thick]="true" [color]="'red'" [spinner]="false"></ng-progress>
 <div class="container">
   <flash-messages></flash-messages>
   <router-outlet></router-outlet>
 </div>
 <app-footer class="mt-auto"></app-footer>
+
+<!-- <ng-progress [direction]="'ltr+'" [min]="20" [max]="1" [speed]="200" [trickleSpeed]="300" [spinner]="true" [spinnerPosition]="'left'"
+  [thick]="false" [meteor]="true" [color]="'red'" [ease]="'linear'"></ng-progress> -->
